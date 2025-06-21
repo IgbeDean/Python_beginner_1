@@ -26,7 +26,7 @@ def get_student_dictionary():
 # Get student data
 student_summary = get_student_dictionary()
 
-print("\nSummary:\n")
+print("\nStudent Summary:\n")
 
 # Display student results
 for key, value in sorted(student_summary.items()):
