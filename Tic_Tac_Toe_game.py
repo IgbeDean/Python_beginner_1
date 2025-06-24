@@ -55,7 +55,7 @@ def typing_effect(message, delay=0.5):
 # check for a win condition
 def check_winner(board, symbol):
     # check for row, column wins
-    for i in range(3):
+    for i in range(3):  
         if all (board[i][j] == symbol for j in range(3)):
             return True
         if all (board[j][i] == symbol for j in range(3)):
@@ -146,6 +146,25 @@ def play_game():
     # If we reach here, it's a draw
     show_draw()
 
+
+def main():
+    while True:
+        # Reset the board before each game
+        global board
+        board = [
+            ["1", "2", "3"],
+            ["4", "5", "6"],
+            ["7", "8", "9"]
+        ]
+
+        play_game()
+
+        again = input("Do you want to play again? (y/n): ").lower()
+        if again != "y":
+            print("Thanks for playing!")
+            break
+
+
 # Start the game
-print("Welcome to Tic Tac Toe!")
-play_game() 
+print("Let the hunger games begin!")
+main()
