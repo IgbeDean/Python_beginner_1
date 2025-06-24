@@ -166,5 +166,5 @@ def main():
 
 
 # Start the game
-print("Let the hunger games begin!")
+print("Let the hunger games begin!!")
 main()
