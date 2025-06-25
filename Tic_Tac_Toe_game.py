@@ -99,11 +99,22 @@ def show_draw():
     print()
 
 # Main game loop
-def play_game():
-    current_player = "X"
+def play_game(player_starts):
+    current_player = "X" if player_starts else "O"
     moves = 0
 
     while moves < 9:
+
+        #if computer goes first
+        if current_player == "O":
+            draw_board(board)
+            print("🤖 Computer goes first", end="", flush=True)
+            typing_effect("...", delay=0.2)
+            time.sleep(1)
+            computer_move(board)
+            moves += 1
+            current_player = "X"
+
         draw_board(board)
         choice = input(f"Player {current_player}, enter a position (1-9): ")
 
@@ -125,7 +136,7 @@ def play_game():
         # ✅ Check if player wins
         if check_winner(board, current_player):
             show_player_win()
-            return
+            return "Player"
 
         if moves == 9:
             break
@@ -140,14 +151,21 @@ def play_game():
         
         # ✅ Check if computer wins
         if check_winner(board, "O"):
+            draw_board(board)
             show_computer_win()
-            return
+            return "Computer"
 
     # If we reach here, it's a draw
     show_draw()
+    return "Draw"
 
 
 def main():
+    player_score = 0
+    computer_score = 0
+    draw_score = 0
+
+
     while True:
         # Reset the board before each game
         global board
@@ -157,7 +175,24 @@ def main():
             ["7", "8", "9"]
         ]
 
-        play_game()
+        goes_first = input("Do you want to go first? (y/n): ").lower()
+        player_starts = True if goes_first == "y" else False
+
+
+        result = play_game(player_starts)
+
+        if result == "Player":
+            player_score += 1
+        elif result == "Computer":
+            computer_score += 1
+        else:
+            draw_score += 1
+
+        print(f"\n📊 Scoreboard:")
+        print(f"🧍 Player: {player_score}")
+        print(f"🤖 Computer: {computer_score}")
+        print(f"🤝 Draws: {draw_score}\n")
+
 
         again = input("Do you want to play again? (y/n): ").lower()
         if again != "y":
